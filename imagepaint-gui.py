@@ -7,7 +7,6 @@ import time
 
 sg.theme('SystemDefaultForReal')
 
-#comment
 
 gui.PAUSE = 0
 screen_w, screen_h = gui.size()

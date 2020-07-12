@@ -5,18 +5,21 @@ from PIL import Image
 from sys import exit
 import time
 
+# Necessary function for bundling icons with pyinstaller
+import sys, os
+def resource_path(relative_path):
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
 sg.theme('SystemDefaultForReal')
 
 #test to master
 gui.PAUSE = 0
 screen_w, screen_h = gui.size()
-screenratio_h = screen_h / 2160
-screenratio_w = screen_w / 3840
 
-margin_h = ((46 + 242+ 52)*screenratio_h +10)
+# Margin is left here only to calculate the rough canvas
+margin_h = ((46 + 242+ 52)*(screen_h / 2160) +10)
 margin_w = (10)
-
-# Note: I would use tuples or lists for each pair, but this is easier to subtract
 canvas_h = int((screen_h - margin_h))
 canvas_w = int((screen_w - margin_w))
 
@@ -75,14 +78,18 @@ gui.write(str(image_h))
 gui.press('enter')
 
 # Automatically set up pencil and colors
+def iconpath(file):
+    return gui.locateCenterOnScreen(resource_path('C:/Users/BACur/Documents/Python Scripts/image-to-paint/icons/' + file))
+
 time.sleep(.1)
-gui.click(470*screenratio_w, 140*screenratio_h)
-time.sleep(.01)
-gui.click(1416*screenratio_w, 170*screenratio_h)
-time.sleep(.01)
-gui.click(1524*screenratio_w, 124*screenratio_h)
-time.sleep(.01)
-gui.moveTo(5, (45 + 242)*screenratio_h +5)
+x, y = iconpath('pencil.png')
+gui.click(x, y)
+x, y = iconpath('c2.png')
+gui.click(x, y)
+x, y = iconpath('grey.png')
+gui.click(x, y)
+x, y = iconpath('canvas.png')
+gui.moveTo(x, y)
 time.sleep(.2)
 
 # Iterate through pixels and do stuff
@@ -93,7 +100,7 @@ def looppx():
         if col > image_w:
             col = 1
             row += 1
-            gui.moveTo(5, (45 + 242)*screenratio_h +5 +row)
+            gui.moveTo(x, y +row)
         if color in range(0, 85):
             gui.click()
         elif color in range(86, 174): # Adjust these for the color sensitivity

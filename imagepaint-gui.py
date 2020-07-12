@@ -16,7 +16,9 @@ screen_w, screen_h = gui.size()
 screenratio_h = screen_h / 2160
 screenratio_w = screen_w / 3840
 
-margin_h = ((46 + 242+ 52)*screenratio_h +10)
+#margin_h = ((46 + 242 + 52)*screenratio_h +10)    <<  here are the current margins you can change them and change the precalculated value below
+
+margin_h = (340*screenratio_h + 10)
 margin_w = (10)
 
 # Note: I would use tuples or lists for each pair, but this is easier to subtract
@@ -79,7 +81,8 @@ gui.press('enter')
 gui.click(470*screenratio_w, 140*screenratio_h)   #Removed delays here, dont seem to need them atleast on my system
 gui.click(1416*screenratio_w, 170*screenratio_h)
 gui.click(1524*screenratio_w, 124*screenratio_h)
-gui.moveTo(5, (45 + 242)*screenratio_h +5)
+#was 45 + 242
+gui.moveTo(5, (287)*screenratio_h +5)
 
 # Iterate through pixels and do stuff
 def looppx():
@@ -89,7 +92,8 @@ def looppx():
         if col > image_w:
             col = 1
             row += 1
-            gui.moveTo(5, (45 + 242)*screenratio_h +5 +row)
+            #was 45 + 242
+            gui.moveTo(5, (287)*screenratio_h +5 +row)  #removing addition function saved 2% speed for the looppx function
         if color in range(0, 85):
             gui.click()
         elif color in range(86, 174): # Adjust these for the color sensitivity

@@ -76,15 +76,10 @@ gui.write(str(image_h))
 gui.press('enter')
 
 # Automatically set up pencil and colors
-time.sleep(.1)
-gui.click(470*screenratio_w, 140*screenratio_h)
-time.sleep(.01)
+gui.click(470*screenratio_w, 140*screenratio_h)   #Removed delays here, dont seem to need them atleast on my system
 gui.click(1416*screenratio_w, 170*screenratio_h)
-time.sleep(.01)
 gui.click(1524*screenratio_w, 124*screenratio_h)
-time.sleep(.01)
 gui.moveTo(5, (45 + 242)*screenratio_h +5)
-time.sleep(.2)
 
 # Iterate through pixels and do stuff
 def looppx():

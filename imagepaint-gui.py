@@ -5,9 +5,13 @@ from PIL import Image
 from sys import exit
 import time
 
-sg.theme('SystemDefaultForReal')
 
-gui.PAUSE = 0
+cursor_time = 0     #Time that the Pyautogui lib delays between functions
+gui.PAUSE = cursor_time
+
+sg.theme('SystemDefaultForReal')        #Set the theme
+
+
 screen_w, screen_h = gui.size()
 screenratio_h = screen_h / 2160
 screenratio_w = screen_w / 3840
@@ -21,15 +25,15 @@ canvas_w = int((screen_w - margin_w))
 
 # Establish UI layout
 column1 = [[sg.Text('Select an image:')],
-          [sg.InputText('', size=(30, 1), disabled=True, enable_events=True, key='Input'), sg.FileBrowse('🗁', key='Browse')],
-          [sg.Text('', size=(30, 1), justification='right', key='Resize')]]
+            [sg.InputText('', size=(30, 1), disabled=True, enable_events=True, key='Input'), sg.FileBrowse('🗁', key='Browse')],
+            [sg.Text('', size=(30, 1), justification='right', key='Resize')]]
 
 column2 = [[sg.Text('Estimated Time:\nUnknown', key='Estimate')],
-          [sg.Text(f'Canvas size: {canvas_w} x {canvas_h}\nImage size: Unknown', key='Stats')]]
+            [sg.Text(f'Canvas size: {canvas_w} x {canvas_h}\nImage size: Unknown', key='Stats')]]
 
 layout = [[sg.Column(column1), sg.VerticalSeparator(), sg.Column(column2)],
-          [sg.HorizontalSeparator()],
-          [sg.Button('Begin'), sg.Button('Exit'), sg.Text('To terminate the process, move the mouse to a screen corner.')]]
+            [sg.HorizontalSeparator()],
+            [sg.Button('Begin'), sg.Button('Exit'), sg.Text('To terminate the process, move the mouse to a screen corner.')]]
 
 window = sg.Window('Image to Paint - Pixel by pixel', layout)
 
@@ -51,11 +55,9 @@ while True:
     if event == 'Begin':
         window.close()
         break
-
 # Resize image if bigger than the canvas
 ratio_h = (image_h / image_w)
 ratio_w = (image_w / image_h)
-
 if image_h > canvas_h:
     image2 = image.resize((round(canvas_h * ratio_w), canvas_h))
     image_w, image_h = image2.size
@@ -103,4 +105,6 @@ def looppx():
         col += 1
 
 if __name__ == "__main__":
-    looppx()
+    print("DEBUG: Preinit completed")
+    looppx()        #loop main code
+    print("DEBUG: Done")

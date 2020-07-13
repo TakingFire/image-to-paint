@@ -76,18 +76,24 @@ gui.press('tab')
 gui.write(str(image_h))
 gui.press('enter')
 
-# Automatically set up pencil and colors
+# Attempt to use specific icons for resolution range
 def iconpath(file):
-    return gui.locateCenterOnScreen(resource_path('C:/Users/BACur/Documents/Python Scripts/image-to-paint/icons/' + file))
+    if screen_h >= 2160:
+        return gui.locateCenterOnScreen(resource_path('C:/Users/BACur/Documents/Python Scripts/image-to-paint/icons/' + file + '.png'), confidence=0.5)
+    elif screen_h in range(1440, 2160):
+        return gui.locateCenterOnScreen(resource_path('C:/Users/BACur/Documents/Python Scripts/image-to-paint/icons/' + file + '2.png'), confidence=0.5)
+    elif screen_h < 1440:
+        return gui.locateCenterOnScreen(resource_path('C:/Users/BACur/Documents/Python Scripts/image-to-paint/icons/' + file + '3.png'), confidence=0.5)
 
-time.sleep(.1)
-x, y = iconpath('pencil.png')
+# Automatically set up pencil and colors
+time.sleep(2)
+x, y = iconpath('pencil')
 gui.click(x, y)
-x, y = iconpath('c2.png')
+x, y = iconpath('c2')
 gui.click(x, y)
-x, y = iconpath('grey.png')
+x, y = iconpath('grey')
 gui.click(x, y)
-x, y = iconpath('canvas.png')
+x, y = iconpath('canvas')
 gui.moveTo(x, y)
 time.sleep(.2)
 

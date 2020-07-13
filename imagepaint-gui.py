@@ -77,23 +77,35 @@ gui.write(str(image_h))
 gui.press('enter')
 
 # Attempt to use specific icons for resolution range
-def iconpath(file):
+def iconpath(file, confidence):
     if screen_h >= 2160:
-        return gui.locateCenterOnScreen(resource_path('C:/Users/BACur/Documents/Python Scripts/image-to-paint/icons/' + file + '.png'), confidence=0.5)
+        return gui.locateOnScreen(resource_path('./icons/' + file + '.png'), confidence=confidence)
     elif screen_h in range(1440, 2160):
-        return gui.locateCenterOnScreen(resource_path('C:/Users/BACur/Documents/Python Scripts/image-to-paint/icons/' + file + '2.png'), confidence=0.5)
+        return gui.locateOnScreen(resource_path('./icons/' + file + '2.png'), confidence=confidence)
     elif screen_h < 1440:
-        return gui.locateCenterOnScreen(resource_path('C:/Users/BACur/Documents/Python Scripts/image-to-paint/icons/' + file + '3.png'), confidence=0.5)
+        return gui.locateOnScreen(resource_path('./icons/' + file + '3.png'), confidence=confidence)
+
+# Using bigger icons means we have to specify where on the icon to click, per resolution
+def coords(file, confidence, x1, y1, x2, y2, x3, y3):
+    frame = iconpath(file, confidence)
+    if screen_h >= 2160: x, y = (frame[0] + x1), (frame[1] + y1)
+    elif screen_h in range(1440, 2160): x, y = (frame[0] + x2), (frame[1] + y2)
+    elif screen_h < 1440: x, y = (frame[0] + x3), (frame[1] + y3)
+    print(x, y)
+    return x, y
 
 # Automatically set up pencil and colors
-time.sleep(2)
-x, y = iconpath('pencil')
-gui.click(x, y)
-x, y = iconpath('c2')
-gui.click(x, y)
-x, y = iconpath('grey')
-gui.click(x, y)
-x, y = iconpath('canvas')
+time.sleep(1)
+gui.click(coords('tools', 0.3, 20, 20, 12, 12, 0, 0))
+# time.sleep(1)
+gui.click(coords('slots', 0.6, 224, 80, 134, 46, 0, 0)) # No lower-res icons yet
+# time.sleep(1)
+gui.click(coords('colors', 0.5, 68, 22, 42, 14, 0, 0))
+# time.sleep(1)
+try:
+    x, y = gui.locateCenterOnScreen(resource_path('./icons/canvas.png'))
+except TypeError:
+    x, y = gui.locateCenterOnScreen(resource_path('./icons/canvas2.png'))
 gui.moveTo(x, y)
 time.sleep(.2)
 

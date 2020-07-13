@@ -24,11 +24,11 @@ canvas_w = int((screen_w - margin_w))
 
 # Establish UI layout
 column1 = [[sg.Text('Select an image:')],
-          [sg.InputText('', size=(30, 1), disabled=True, enable_events=True, key='Input'), sg.FileBrowse('🗁', key='Browse')],
-          [sg.Text('', size=(30, 1), justification='right', key='Resize')]]
+           [sg.InputText('', size=(30, 1), disabled=True, enable_events=True, key='Input'), sg.FileBrowse('🗁', key='Browse')],
+           [sg.Text('', size=(30, 1), justification='right', key='Resize')]]
 
 column2 = [[sg.Text('Estimated Time:\nUnknown', key='Estimate')],
-          [sg.Text(f'Canvas size: {canvas_w} x {canvas_h}\nImage size: Unknown', key='Stats')]]
+           [sg.Text(f'Canvas size: {canvas_w} x {canvas_h}\nImage size: Unknown', key='Stats')]]
 
 layout = [[sg.Column(column1), sg.VerticalSeparator(), sg.Column(column2)],
           [sg.HorizontalSeparator()],
